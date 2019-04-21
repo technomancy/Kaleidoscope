@@ -52,6 +52,8 @@ class AVREEPROM {
   uint16_t length() {
     return EEPROM.length();
   }
+
+  void commit() {}
 };
 
 }

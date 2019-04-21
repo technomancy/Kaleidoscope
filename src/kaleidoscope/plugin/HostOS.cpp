@@ -43,6 +43,7 @@ EventHandlerResult HostOS::onSetup(void) {
 void HostOS::os(hostos::Type new_os) {
   os_ = new_os;
   KeyboardHardware.storage().update(eeprom_slice_, os_);
+  KeyboardHardware.storage().commit();
 }
 
 }

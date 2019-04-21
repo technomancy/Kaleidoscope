@@ -101,6 +101,7 @@ EventHandlerResult FingerPainter::onFocusEvent(const char *command) {
     for (uint16_t i = 0; i < ROWS * COLS / 2; i++) {
       KeyboardHardware.storage().update(color_base_ + i, 0);
     }
+    KeyboardHardware.storage().commit();
     return EventHandlerResult::OK;
   }
 

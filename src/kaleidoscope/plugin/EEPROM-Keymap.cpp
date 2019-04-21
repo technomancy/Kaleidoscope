@@ -141,6 +141,7 @@ EventHandlerResult EEPROMKeymap::onFocusEvent(const char *command) {
       updateKey(i, k);
       i++;
     }
+    KeyboardHardware.storage().commit();
   }
 
   return EventHandlerResult::EVENT_CONSUMED;

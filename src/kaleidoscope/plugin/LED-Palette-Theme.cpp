@@ -97,6 +97,7 @@ void LEDPaletteTheme::updateColorIndexAtPosition(uint16_t map_base, uint16_t pos
     indexes = (color_index << 4) + other;
   }
   KeyboardHardware.storage().update(map_base + position / 2, indexes);
+  KeyboardHardware.storage().commit();
 }
 
 EventHandlerResult LEDPaletteTheme::onFocusEvent(const char *command) {
@@ -133,6 +134,7 @@ EventHandlerResult LEDPaletteTheme::onFocusEvent(const char *command) {
     KeyboardHardware.storage().put(palette_base_ + i * sizeof(color), color);
     i++;
   }
+  KeyboardHardware.storage().commit();
 
   ::LEDControl.refreshAll();
 
@@ -175,6 +177,7 @@ EventHandlerResult LEDPaletteTheme::themeFocusEvent(const char *command,
     KeyboardHardware.storage().update(theme_base + pos, indexes);
     pos++;
   }
+  KeyboardHardware.storage().commit();
 
   ::LEDControl.refreshAll();
 
