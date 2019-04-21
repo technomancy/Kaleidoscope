@@ -19,6 +19,14 @@
 
 #include <Kaleidoscope.h>
 
+#if ARDUINO_ARCH_AVR
+#define FocusIO Serial
+#endif
+
+#if ARDUINO_ARCH_SAMD
+#define FocusIO SerialUSB
+#endif
+
 namespace kaleidoscope {
 namespace plugin {
 class FocusSerial : public kaleidoscope::Plugin {
@@ -37,12 +45,12 @@ class FocusSerial : public kaleidoscope::Plugin {
   }
   void send(const bool b) {
     printBool(b);
-    Serial.print(SEPARATOR);
+    FocusIO.print(SEPARATOR);
   }
   template <typename V>
   void send(V v) {
-    Serial.print(v);
-    Serial.print(SEPARATOR);
+    FocusIO.print(v);
+    FocusIO.print(SEPARATOR);
   }
   template <typename Var, typename... Vars>
   void send(Var v, const Vars&... vars) {
@@ -53,31 +61,31 @@ class FocusSerial : public kaleidoscope::Plugin {
   void sendRaw() {}
   template <typename Var, typename... Vars>
   void sendRaw(Var v, const Vars&... vars) {
-    Serial.print(v);
+    FocusIO.print(v);
     sendRaw(vars...);
   }
 
   const char peek() {
-    return Serial.peek();
+    return FocusIO.peek();
   }
 
   void read(Key &key) {
-    key.raw = Serial.parseInt();
+    key.raw = FocusIO.parseInt();
   }
   void read(cRGB &color) {
-    color.r = Serial.parseInt();
-    color.g = Serial.parseInt();
-    color.b = Serial.parseInt();
+    color.r = FocusIO.parseInt();
+    color.g = FocusIO.parseInt();
+    color.b = FocusIO.parseInt();
   }
   void read(uint8_t &u8) {
-    u8 = Serial.parseInt();
+    u8 = FocusIO.parseInt();
   }
   void read(uint16_t &u16) {
-    u16 = Serial.parseInt();
+    u16 = FocusIO.parseInt();
   }
 
   bool isEOL() {
-    return Serial.peek() == '\n';
+    return FocusIO.peek() == '\n';
   }
 
   static constexpr char COMMENT = '#';
