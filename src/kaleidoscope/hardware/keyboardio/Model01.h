@@ -30,12 +30,17 @@
 #define CRGB(r,g,b) (cRGB){b, g, r}
 
 #include "kaleidoscope/Hardware.h"
+#include "kaleidoscope/driver/MCU.h"
+#include "kaleidoscope/driver/storage/AVREEPROM.h"
 
 namespace kaleidoscope {
 namespace hardware {
 namespace keyboardio {
 
-class Model01 : public kaleidoscope::Hardware {
+WITH_STORAGE(keyboardio, Model01, AVREEPROM);
+
+class Model01 : public kaleidoscope::Hardware<Model01> {
+  friend class kaleidoscope::Hardware<Model01>;
  public:
   Model01(void);
 
@@ -82,6 +87,10 @@ class Model01 : public kaleidoscope::Hardware {
   keydata_t rightHandState;
   keydata_t previousLeftHandState;
   keydata_t previousRightHandState;
+
+ protected:
+  kaleidoscope::driver::mcu::ATMega32U4 mcu_;
+  kaleidoscope::driver::storage::AVREEPROM storage_;
 
  private:
   static void actOnHalfRow(byte row, byte colState, byte colPrevState, byte startPos);

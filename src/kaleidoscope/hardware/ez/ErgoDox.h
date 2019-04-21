@@ -43,12 +43,16 @@ struct cRGB {
 #define CRGB(r,g,b) (cRGB){b, g, r}
 
 #include "kaleidoscope/Hardware.h"
+#include "kaleidoscope/driver/storage/AVREEPROM.h"
 
 namespace kaleidoscope {
 namespace hardware {
 namespace ez {
 
-class ErgoDox : public kaleidoscope::Hardware {
+WITH_STORAGE(ez, ErgoDox, AVREEPROM);
+
+class ErgoDox : public kaleidoscope::Hardware<ErgoDox> {
+  friend class kaleidoscope::Hardware<ErgoDox>;
  public:
   ErgoDox(void) {}
 
@@ -80,6 +84,9 @@ class ErgoDox : public kaleidoscope::Hardware {
   void resetDevice();
 
   static uint8_t debounce;
+
+ protected:
+  kaleidoscope::driver::storage::AVREEPROM storage_;
 
  private:
   static ErgoDoxScanner scanner_;

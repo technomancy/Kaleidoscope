@@ -55,8 +55,8 @@ Key EEPROMKeymap::getKey(uint8_t layer, byte row, byte col) {
 
   uint16_t pos = ((layer * ROWS * COLS) + (row * COLS) + col) * 2;
 
-  key.flags = EEPROM.read(keymap_base_ + pos);
-  key.keyCode = EEPROM.read(keymap_base_ + pos + 1);
+  key.flags = KeyboardHardware.storage().read(keymap_base_ + pos);
+  key.keyCode = KeyboardHardware.storage().read(keymap_base_ + pos + 1);
 
   return key;
 }
@@ -78,8 +78,8 @@ uint16_t EEPROMKeymap::keymap_base(void) {
 }
 
 void EEPROMKeymap::updateKey(uint16_t base_pos, Key key) {
-  EEPROM.update(keymap_base_ + base_pos * 2, key.flags);
-  EEPROM.update(keymap_base_ + base_pos * 2 + 1, key.keyCode);
+  KeyboardHardware.storage().update(keymap_base_ + base_pos * 2, key.flags);
+  KeyboardHardware.storage().update(keymap_base_ + base_pos * 2 + 1, key.keyCode);
 }
 
 void EEPROMKeymap::dumpKeymap(uint8_t layers, Key(*getkey)(uint8_t, byte, byte)) {

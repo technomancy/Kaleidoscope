@@ -41,6 +41,7 @@ struct cRGB {
 
 #include "kaleidoscope/Hardware.h"
 #include "kaleidoscope/driver/MCU.h"
+#include "kaleidoscope/driver/storage/AVREEPROM.h"
 
 #define ROW_PIN_LIST(...)  __VA_ARGS__
 #define COL_PIN_LIST(...)  __VA_ARGS__
@@ -72,7 +73,19 @@ struct cRGB {
 
 namespace kaleidoscope {
 namespace hardware {
-class ATMegaKeyboard : public kaleidoscope::Hardware {
+
+class ATMegaKeyboard;
+
+}
+
+template<>
+struct HardwareInventory<hardware::ATMegaKeyboard> {
+  typedef driver::storage::AVREEPROM StorageType;
+};
+
+namespace hardware {
+class ATMegaKeyboard : public kaleidoscope::Hardware<ATMegaKeyboard> {
+  friend class kaleidoscope::Hardware<ATMegaKeyboard>;
  public:
   ATMegaKeyboard(void) {}
 
@@ -99,6 +112,7 @@ class ATMegaKeyboard : public kaleidoscope::Hardware {
 
  protected:
   kaleidoscope::driver::mcu::ATMega32U4 mcu_;
+  kaleidoscope::driver::storage::AVREEPROM storage_;
 
  private:
 

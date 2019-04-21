@@ -50,9 +50,25 @@
 typedef struct cRGB cRGB;
 
 namespace kaleidoscope {
+
+template<typename Hardware__>
+struct HardwareInventory {};
+
+#define WITH_STORAGE(VENDOR, CLASSNAME, STORAGETYPE)      \
+    class CLASSNAME;                                      \
+  }                                                       \
+  }                                                       \
+  template<>                                              \
+  struct HardwareInventory<hardware::VENDOR::CLASSNAME> { \
+    typedef driver::storage::STORAGETYPE StorageType;     \
+  };                                                      \
+  namespace hardware {                                    \
+  namespace VENDOR {
+
 /** Kaleidoscope Hardware base class.
  * Essential methods all hardware libraries must implement.
  */
+template <typename Device_>
 class Hardware {
  public:
   /**
@@ -310,6 +326,16 @@ class Hardware {
    */
   void enableHardwareTestMode() {}
 
+  typedef typename HardwareInventory<Device_>::StorageType StorageType;
+  StorageType &storage() {
+    return this->device().storage_;
+  }
+
+ protected:
   /** @} */
+  Device_ &device() {
+    return static_cast<Device_ &>(*this);
+  }
+
 };
 }
