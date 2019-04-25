@@ -215,7 +215,9 @@ class Hardware {
    * points should get detached, the device must remain powered on.
    */
   void detachFromHost() {
+#ifdef ARDUINO_ARCH_AVR
     UDCON |= _BV(DETACH);
+#endif
   }
   /**
    * Attack the device to the host.
@@ -223,8 +225,11 @@ class Hardware {
    * Must restore the link detachFromHost severed.
    */
   void attachToHost() {
+#ifdef ARDUINO_ARCH_AVR
     UDCON &= ~_BV(DETACH);
+#endif
   }
+
   /** @} */
 
   /**
