@@ -17,11 +17,15 @@
 
 #include <Kaleidoscope-FirmwareDump.h>
 #include <Kaleidoscope-FocusSerial.h>
+
+#if ARDUINO_ARCH_AVR
 #include <avr/boot.h>
+#endif
 
 namespace kaleidoscope {
 namespace plugin {
 
+#if ARDUINO_ARCH_AVR
 EventHandlerResult FirmwareDump::onSetup() {
   enum {
     BOOT_SIZE_4096 = 0b000,
@@ -63,6 +67,23 @@ EventHandlerResult FirmwareDump::onFocusEvent(const char *command) {
 
   return EventHandlerResult::EVENT_CONSUMED;
 }
+#else
+EventHandlerResult FirmwareDump::onSetup() {
+  return EventHandlerResult::ERROR;
+}
+
+EventHandlerResult FirmwareDump::onFocusEvent(const char *command) {
+  const char *cmd = PSTR("firmware.dump");
+
+  if (::Focus.handleHelp(command, cmd))
+    return EventHandlerResult::OK;
+
+  if (strcmp_P(command, cmd) != 0)
+    return EventHandlerResult::OK;
+
+  return EventHandlerResult::ERROR;
+}
+#endif
 
 }
 }
