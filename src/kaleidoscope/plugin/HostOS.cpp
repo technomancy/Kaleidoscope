@@ -18,8 +18,6 @@
 #include <kaleidoscope/plugin/HostOS.h>
 #include <Kaleidoscope-EEPROM-Settings.h>
 
-#include <EEPROM.h>
-
 namespace kaleidoscope {
 namespace plugin {
 
