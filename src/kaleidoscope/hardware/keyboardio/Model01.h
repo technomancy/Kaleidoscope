@@ -37,7 +37,8 @@ namespace kaleidoscope {
 namespace hardware {
 namespace keyboardio {
 
-WITH_STORAGE(keyboardio, Model01, AVREEPROM);
+KALEIDOSCOPE_HARDWARE_INVENTORY(keyboardio, Model01,
+                                WITH_STORAGE(AVREEPROM));
 
 class Model01 : public kaleidoscope::Hardware<Model01> {
   friend class kaleidoscope::Hardware<Model01>;

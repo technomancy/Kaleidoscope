@@ -49,7 +49,8 @@ namespace kaleidoscope {
 namespace hardware {
 namespace ez {
 
-WITH_STORAGE(ez, ErgoDox, AVREEPROM);
+KALEIDOSCOPE_HARDWARE_INVENTORY(ez, ErgoDox,
+                                WITH_STORAGE(AVREEPROM));
 
 class ErgoDox : public kaleidoscope::Hardware<ErgoDox> {
   friend class kaleidoscope::Hardware<ErgoDox>;

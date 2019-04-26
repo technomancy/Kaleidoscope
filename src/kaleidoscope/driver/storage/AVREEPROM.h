@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "kaleidoscope/driver/Storage.h"
 #include <EEPROM.h>
 
 namespace kaleidoscope {
