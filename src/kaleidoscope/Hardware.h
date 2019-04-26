@@ -54,15 +54,15 @@ namespace kaleidoscope {
 template<typename Hardware__>
 struct HardwareInventory {};
 
-#define WITH_STORAGE(VENDOR, CLASSNAME, STORAGETYPE)      \
-    class CLASSNAME;                                      \
-  }                                                       \
-  }                                                       \
-  template<>                                              \
-  struct HardwareInventory<hardware::VENDOR::CLASSNAME> { \
-    typedef driver::storage::STORAGETYPE StorageType;     \
-  };                                                      \
-  namespace hardware {                                    \
+#define KALEIDOSCOPE_HARDWARE_INVENTORY(VENDOR, CLASSNAME, ...) \
+    class CLASSNAME;                                            \
+  }                                                             \
+  }                                                             \
+  template<>                                                    \
+  struct HardwareInventory<hardware::VENDOR::CLASSNAME> {       \
+    __VA_ARGS__                                                 \
+  };                                                            \
+  namespace hardware {                                          \
   namespace VENDOR {
 
 /** Kaleidoscope Hardware base class.
